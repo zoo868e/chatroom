@@ -9,7 +9,8 @@
 #include<netinet/in.h>
 
 void error(const char *msg);
-void serve(int sockfd);
+void start_server(int &sockfd);
+void serve(int &sockfd);
 void welcome(char *user_name);
 void leave(char *user_name);
 #endif

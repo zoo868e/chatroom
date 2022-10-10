@@ -5,7 +5,30 @@ void error(const char *msg){
 	exit(1);
 }
 
-void serve(int sockfd){
+void start_server(int &sockfd){
+	listen(sockfd, 5);
+	int client_fd, pid;
+	socklen_t clilen;
+	struct sockaddr_in cli_addr;
+	while(1){
+		client_fd = accept(sockfd, (struct sockaddr *) &cli_addr, &clilen);
+		if(client_fd < 0)
+			error("ERROR on accept");
+		pid = fork();
+		if(pid < 0)
+			error("ERROR on fork");
+		if(pid == 0){
+			close(sockfd);
+			// SERVE THE CLIENT
+			serve(client_fd);
+			printf("client %d just disconnect\n", client_fd);
+			exit(0);
+		}
+		else close(client_fd);
+	}
+}
+
+void serve(int &sockfd){
 	int n;
 	char buffer[256], user_name[256];
 	bzero(user_name, 256);
