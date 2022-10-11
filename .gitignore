@@ -15,4 +15,8 @@ stamp-h1
 src/.*
 include/*.in
 autom4te.cache*
-
+Chatroom
+Client
+*CM.*[^L].*
+CMakeFile*
+cmake_install.cmake
