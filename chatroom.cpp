@@ -1,5 +1,6 @@
 #include<iostream>
 #include"./include/connection_common.h"
+#include"./include/interface.h"
 using namespace std;
 int main(int argc, char* argv[]){
 	int server_fd, server_portno, pid;

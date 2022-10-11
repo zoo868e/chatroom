@@ -1,5 +1,0 @@
-/home/zoo868e/chatroom/CMakeFiles/rebuild_cache.dir
-/home/zoo868e/chatroom/CMakeFiles/edit_cache.dir
-/home/zoo868e/chatroom/src/CMakeFiles/rebuild_cache.dir
-/home/zoo868e/chatroom/src/CMakeFiles/Chatroom.dir
-/home/zoo868e/chatroom/src/CMakeFiles/edit_cache.dir
