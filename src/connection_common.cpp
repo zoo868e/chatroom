@@ -5,7 +5,8 @@ void error(const char *msg){
 	exit(1);
 }
 
-void start_server(int &sockfd){
+void start_server(int &t_sockfd){
+	int sockfd = t_sockfd;
 	listen(sockfd, 5);
 	int client_fd, pid;
 	socklen_t clilen;
