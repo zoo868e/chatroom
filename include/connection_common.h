@@ -9,10 +9,10 @@
 #include<netinet/in.h>
 #include<netdb.h>
 #include"communicate.h"
+#include<iostream>
 
 void error(const char *msg);
-void start_server(int &sockfd);
-void start_client(int &sockfd);
+void connect_server(int &sockfd, string server_name, string server_port);
 void serve(int &sockfd);
 void welcome(char *user_name);
 void leave(char *user_name);

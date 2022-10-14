@@ -5,28 +5,20 @@ void error(const char *msg){
 	exit(1);
 }
 
-void start_server(int &t_sockfd){
-	int sockfd = t_sockfd;
-	listen(sockfd, 5);
-	int client_fd, pid;
-	socklen_t clilen;
-	struct sockaddr_in cli_addr;
-	while(1){
-		client_fd = accept(sockfd, (struct sockaddr *) &cli_addr, &clilen);
-		if(client_fd < 0)
-			error("ERROR on accept");
-		pid = fork();
-		if(pid < 0)
-			error("ERROR on fork");
-		if(pid == 0){
-			close(sockfd);
-			// SERVE THE CLIENT
-			serve(client_fd);
-			printf("client %d just disconnect\n", client_fd);
-			exit(0);
-		}
-		else close(client_fd);
+void connect_server(int &sockfd, char* server_name, string server_port){
+	struct sockaddr_in serv_addr;
+	struct hostent *server;
+	server = gethostbyname(server_name);
+	if(server == NULL){
+		cerr << "ERROR, no such host" << endl;
+		exit(0);
 	}
+	bzero((char *) &serv_addr, sizeof(serv_addr));
+	serv_addr.sin_family = AF_INET;
+	bcopy((char *)server->h_addr, (char *)&serv_addr.sin_addr.s_addr, server->h_length);
+	serv_addr.sin_port = htons(stoi(server_port));
+	if(connect(sockfd, (struct sockaddr *)&serv_addr, sizeof(serv_addr)) < 0)
+		error("ERROR connecting");
 }
 
 void serve(int &sockfd){
