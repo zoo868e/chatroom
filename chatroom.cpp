@@ -21,7 +21,28 @@ int main(int argc, char* argv[]){
 	if(bind(server_fd, (struct sockaddr*) &serv_addr, sizeof(serv_addr)) < 0)
 		error("ERROR on binding");
 
-	start_server(server_fd);
+	listen(server_fd, 5);
+	int client_fd;
+	socklen_t clilen;
+	struct sockaddr_in cli_addr;
+	clilen = sizeof(cli_addr);
+	while(1){
+		client_fd = accept(server_fd, (struct sockaddr *) &cli_addr, &clilen);
+		if(client_fd < 0)
+			error("ERROR on accept");
+		pid = fork();
+		if(pid < 0)
+			error("ERROR on fork");
+		if(pid == 0){
+			close(server_fd);
+			// SERVE THE CLIENT
+			serve(client_fd);
+			printf("client %d just disconnect\n", client_fd);
+			exit(0);
+		}
+		else close(client_fd);
+	}
+
 	close(server_fd);
 	return 0;
 }
